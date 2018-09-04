@@ -283,6 +283,43 @@ void AsclinAscDemo_run(void)
 
 ### 추가적인 설명
 
+**Baudrate 변경**
+
+1. Teraterm을 실행하여 board가 연결된 port와 connect
+
+
+
+   <img src='image/Change_BT_1.png'>
+
+2. Board에 설정한 통신 보드레이트를 맞춘다(설정 -> 시리얼 포트)
+
+
+
+   <img src='image/Change_BT_2.png'>
+
+3. "AT" command 를 입력한다
+
+
+
+   <img src='image/Change_BT_3.png'>
+
+4. HC-06의 응답인 "OK"가 출력된다.
+
+
+
+   <img src='image/Change_BT_4.png'>
+
+5. "AT+BUAD8" command를 입력한다.
+
+
+
+   <img src='image/Change_BT_5.png'>
+
+6. HC-06의 응답인 "OK115200"가 출력된다.
+
+
+
+   <img src='image/Change_BT_6.png'>
 
 
 ## 2. Connect BlueTooth and AURIX
