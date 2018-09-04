@@ -269,7 +269,7 @@ void AsclinAscDemo_run(void)
 
 
 
-###HC-06 related
+### HC-06 related
 
 - AT command mode 
   -  HC-06의 설정을 바꿀수 있는 상태
@@ -280,11 +280,11 @@ void AsclinAscDemo_run(void)
 
 
 
-###추가적인 설명
+### 추가적인 설명
 
 
 
-##2. Connect BlueTooth and AURIX
+## 2. Connect BlueTooth and AURIX
 
 - InfineonRacer_TC23A 코드를 변형하여 사용
   - 송수신이 일어날 물리적 pin(P14.0, 14.1)에서 pin(P15.2, 15.3)으로 변경
@@ -331,7 +331,7 @@ void initSerialInterface(void)
 
 
 
-###추가적인 설명
+### 추가적인 설명
 
 Terminal을 통한 송수신 확인
 
