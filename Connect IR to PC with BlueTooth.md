@@ -275,53 +275,56 @@ void AsclinAscDemo_run(void)
 
 ### 추가적인 설명
 
-**Baudrate 변경**
+**Baud rate 변경**
 
-1. Teraterm을 실행하여 board가 연결된 port와 connect
+1. Teraterm을 실행하여 board가 연결된 port와 연결
 
-
-
-   <img src='image/Change_BT_1.png'>
-
-2. Board에 설정한 통신 보드레이트를 맞춘다(설정 -> 시리얼 포트)
+<img src='image/Change_BT_1.png'>
 
 
 
-   <img src='image/Change_BT_2.png'>
+2. Board에 설정한 통신 baud rate를 맞춘다(설정 -> 시리얼 포트)
+
+<img src='image/Change_BT_2.png'>
+
+
 
 3. "AT" command 를 입력한다
 
+<img src='image/Change_BT_3.png'>
 
 
-   <img src='image/Change_BT_3.png'>
 
 4. HC-06의 응답인 "OK"가 출력된다.
 
+<img src='image/Change_BT_4.png'>
 
 
-   <img src='image/Change_BT_4.png'>
 
 5. "AT+BUAD8" command를 입력한다.
 
+<img src='image/Change_BT_5.png'>
 
 
-   <img src='image/Change_BT_5.png'>
 
 6. HC-06의 응답인 "OK115200"가 출력된다.
 
-
-
-   <img src='image/Change_BT_6.png'>
+<img src='image/Change_BT_6.png'>
 =======
+
+
 ## 2. Connect Bluetooth and AURIX
+
+
+### Example code
 - InfineonRacer_TC23A
   - 송수신이 일어날 물리적 pin(P14.0, 14.1)에서 pin(P15.2, 15.3)으로 변경
 
-### Hardware connnection
+### Hardware
 
-- Pin 연결
+- Pin connection
 
-  - BlueToothe 모듈은 AURIX의 pin(P15.2, 15.3)와 연결된다.
+  - Bluetooth모듈은 AURIX의 pin(P15.2, P15.3)와 연결된다.
 
 
 <img src='image/Use_Bluetooth.png' style='zoom:100%'>
@@ -331,7 +334,7 @@ void AsclinAscDemo_run(void)
 ### iLLD related
 
 - Module Configuration
-  - 블루투스 통신을 위해 RxD / TxD Line을 P15.3 / P15.2로 변경.
+  - 블루투스 통신을 위해 RxD / TxD Line을 P15.3, P15.2로 변경.
 
 ```c
 //in AsclinShellInterface.c
