@@ -270,6 +270,49 @@ void AsclinAscDemo_run(void)
 - Way to the AT command mode
   - 모듈에 파워 공급시 AT command mode로 진입한다.
   - 페어링 할 시 AT command  mode가 중단된다.
+- Command
+
+```
+1. Test communication
+Send: AT (please send it every second)
+Back: OK
+
+2. Reset the Bluetooth serial baud rate
+Send: AT+BAUD1
+Back: OK1200
+Send: AT+BAUD2
+Back: OK2400
+……
+1---------1200
+2---------2400
+3---------4800
+4---------9600 (Default)
+5---------19200
+6---------38400
+7---------57600
+8---------115200
+9---------230400
+A---------460800
+B---------921600
+C---------1382400
+
+Warn : Do not set the baud rate beyond the computer's acceptable range. 
+		If you change it, you can't get it back.
+		
+3. Reset the Bluetooth name
+Send: AT+NAMEname
+Back: OKname
+
+4. change the Bluetooth pair password
+Send: AT+PINxxxx
+Back:OKsetpin
+
+Example:
+Send: AT+PIN8888
+Back: OKsetpin
+```
+
+
 
 
 
@@ -325,7 +368,6 @@ void AsclinAscDemo_run(void)
 - Pin connection
 
   - Bluetooth모듈은 AURIX의 pin(P15.2, P15.3)와 연결된다.
-
 
 <img src='image/Use_Bluetooth.png' style='zoom:100%'>
 
