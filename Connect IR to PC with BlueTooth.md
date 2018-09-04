@@ -10,7 +10,7 @@
 - Hello world
 - My own terminals
 - iLLD_1_0_1_4_0-Files/File_List/IfxAsclin_Asc.c
-- HC-06(data sheet)
+- HC-06 data sheet
 
 **[Example Code]**
 
@@ -19,37 +19,32 @@
 
 
 
-## Backgorung 정보
+## Backgroung Information
 
-- **BlueTooth**
+- **Bluetooth**
   - HC-06은 3.1 V ~ 4.2 V에서 동작한다. TC237의 출력 전압은 3.3 V로 충분히 사용 가능하다.
-
-  - Rx / Tx 는 Receive, Transmit의 약어로 HC-06과 TC237의 핀이 엇갈리게 연결되어야 한다.
+  - Rx / Tx 는 Receive, Transmit의 약어로 HC-06과 TC237의 Rx,Tx가 교차하도록 연결해야 한다.
 
 - **AT Command**
 
-  - HC-06의 Default Baud Rate는 9600이고, TC237의 Default Baud rate는 115200이다.
-  - 원활한 통신을 위해서는 두 장치의 Baud rate를 통일시켜주어야 한다.
-  - HC-06의 Baud rate를 변경하기 위해서는 AT Command를 사용해야 한다.
+  - HC-06의 default baud rate는 9600이고, TC237은 115200이다.
+  - 원활한 통신을 위해서는 두 장치의 baud rate가 동일해야 한다.
+  - HC-06의 baud rate를 변경하기 위해서 AT Command를 사용한다.
 
 
 
-## 1. Change bluetooth Baudrate
-
-- MyIlldModule_TC23A - AsclinAsc 코드를 변형해서 사용
-- 블루투스 모듈인 **HC-06**의 baudrate를 9600(default value)에서 115200으로 변경
-  - 터미널을 통해 AURIX board에 명령
-  - AURIX board에서 받은 명령을 HC-06으로 전달
-
-
-### Code Description
+## 1. Change Bluetooth baud rate
+###Objectives
 
 - 터미널을 통해 다음의 기능이 동작하는지 확인한다.
   - 터미널을 통해  "AT"라는 문자를 입력한다
   - Shell에 "OK"라는 문자가 출력되는지 확인한다.
-  - AT command를 통해 baudrate를 변경한다.
-
-
+- AT command를 통해 baudrate를 변경한다.
+  - HC-06의 baud rate를 9600에서 115200으로 변경
+  - 터미널을 통해 AURIX board에 명령
+  - AURIX board에서 받은 명령을 HC-06으로 전달
+###Example code
+- MyIlldModule_TC23A - AsclinAsc
 
 ### Hardware Connection
 
@@ -62,8 +57,6 @@
 
 
 
-
-
 ### iLLD - realated
 
 #### Module Configuration
@@ -71,7 +64,7 @@
 - Asclin의 모듈 초기화
 
   - Asc0과 Asc1을 설정 
-  - 송수신이 일어날 물리적 pin(P14.0, 14.1), pin(P15.4, 15.5)을 고르고.
+  - 송수신이 일어날 물리적 pin(P14.0, P14.1) , (P15.4, P15.5)을 설정
   - Data 전송 속도를 정한 뒤, (AURIX와 통신을 진행하는 기기와 동일하게 맞춤)
   - 통신관련 Interrupt 설정
 
@@ -93,7 +86,7 @@
   
           /* set the desired baudrate */
           ascConfig.baudrate.prescaler    = 1;
-          ascConfig.baudrate.baudrate     = 9600; /* FDR values will be calculated in initModule */
+          ascConfig.baudrate.baudrate     = 115200; /* FDR values will be calculated in initModule */
           ascConfig.baudrate.oversampling = IfxAsclin_OversamplingFactor_4;
   
           /* ISR priorities and interrupt target */
@@ -204,9 +197,9 @@ void asclin1ErISR(void)
 
 #### Module Behavior
 
-- AT command를 사용하기 위해 함수를 구성
+- Asclin_Asc Function description
   - ``IfxAsclin_Asc_getReadCount`` :  buffer에 입력된 데이터의 바이트 수를 리턴
-  - ```IfxAsclin_Asc_read```  : 버퍼의 데이터를 읽고 지정한  변수에 데이터를 저장
+  - ```IfxAsclin_Asc_read```  : buffer의 데이터를 읽고 지정한 변수에 데이터를 저장
   - ```IfxAsclin_Asc_write``` : 변수에 있는 데이터를 출력
 
 ```c
@@ -269,32 +262,29 @@ void AsclinAscDemo_run(void)
 
 
 
-### HC-06 related
+###HC-06 related
 
 - AT command mode 
   -  HC-06의 설정을 바꿀수 있는 상태
-  -  1초 간격으로 LED가 점멸
-  -  연결 확인, Board rate 변경,  Bluetoothe 이름 변경, Bluetooth 패스워드 변경 등이 가능하다.
+  - 연결 확인, baud rate 변경,  Bluetoothe 이름 변경, Bluetooth 패스워드 변경 등이 가능하다.
 - Way to the AT command mode
   - 모듈에 파워 공급시 AT command mode로 진입한다.
   - 페어링 할 시 AT command  mode가 중단된다.
 
 
 
-### 추가적인 설명
+##2. Connect Bluetooth and AURIX
 
-
-
-## 2. Connect BlueTooth and AURIX
-
-- InfineonRacer_TC23A 코드를 변형하여 사용
+### Example code
+- InfineonRacer_TC23A
   - 송수신이 일어날 물리적 pin(P14.0, 14.1)에서 pin(P15.2, 15.3)으로 변경
 
 ### Hardware connnection
 
 - Pin 연결
 
-  - BlueToothe 모듈은  AURIX 보드의 pin(P15.2, 15.3)와 연결된다.
+  - BlueToothe 모듈은 AURIX의 pin(P15.2, 15.3)와 연결된다.
+
 
 <img src='image/Use_Bluetooth.png' style='zoom:100%'>
 
@@ -332,28 +322,28 @@ void initSerialInterface(void)
 
 
 
-### 추가적인 설명
+###추가적인 설명
 
 Terminal을 통한 송수신 확인
 
 1.  Teraterm을 실행하여 board에 연결된 HC-06과 연결.
 
-<img src='image/teraterm_1.png'>
+![teraterm_1](image/teraterm_1.png)
 
 
 
 2. 설정 - 시리얼포트 설정에서 Baud rate를 115200으로 변경.
 
-<img src='image/teraterm_2.png'>
+![teraterm_2](image/teraterm_2.png)
 
 
 
 3.  Enter를 입력하면 아래와 같은 화면이 된다.
 
-<img src='image/teraterm_3.png'>
+![teraterm_3](image/teraterm_3.png)
 
 
 
 4. help명령어 입력 시 아래와 같다.
 
-<img src='image/teraterm_4.png'>
+![teraterm_4](image/teraterm_4.png)
