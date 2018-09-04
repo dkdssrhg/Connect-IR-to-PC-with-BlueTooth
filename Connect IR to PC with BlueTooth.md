@@ -313,7 +313,7 @@ void AsclinAscDemo_run(void)
 
    <img src='image/Change_BT_6.png'>
 =======
-##2. Connect Bluetooth and AURIX
+## 2. Connect Bluetooth and AURIX
 - InfineonRacer_TC23A
   - 송수신이 일어날 물리적 pin(P14.0, 14.1)에서 pin(P15.2, 15.3)으로 변경
 
@@ -360,7 +360,7 @@ void initSerialInterface(void)
 
 
 
-###추가적인 설명
+### 추가적인 설명
 
 Terminal을 통한 송수신 확인
 
