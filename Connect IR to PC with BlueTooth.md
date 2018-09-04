@@ -273,7 +273,8 @@ void AsclinAscDemo_run(void)
 
 - AT command mode 
   -  HC-06의 설정을 바꿀수 있는 상태
-  - 연결 확인, Board rate 변경,  Bluetoothe 이름 변경, Bluetooth 패스워드 변경 등이 가능하다.
+  -  1초 간격으로 LED가 점멸
+  -  연결 확인, Board rate 변경,  Bluetoothe 이름 변경, Bluetooth 패스워드 변경 등이 가능하다.
 - Way to the AT command mode
   - 모듈에 파워 공급시 AT command mode로 진입한다.
   - 페어링 할 시 AT command  mode가 중단된다.
@@ -337,22 +338,22 @@ Terminal을 통한 송수신 확인
 
 1.  Teraterm을 실행하여 board에 연결된 HC-06과 연결.
 
-![teraterm_1](image/teraterm_1.png)
+<img src='image/teraterm_1.png'>
 
 
 
 2. 설정 - 시리얼포트 설정에서 Baud rate를 115200으로 변경.
 
-![teraterm_2](image/teraterm_2.png)
+<img src='image/teraterm_2.png'>
 
 
 
 3.  Enter를 입력하면 아래와 같은 화면이 된다.
 
-![teraterm_3](image/teraterm_3.png)
+<img src='image/teraterm_3.png'>
 
 
 
 4. help명령어 입력 시 아래와 같다.
 
-![teraterm_4](image/teraterm_4.png)
+<img src='image/teraterm_4.png'>
