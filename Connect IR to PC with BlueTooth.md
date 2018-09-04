@@ -267,6 +267,8 @@ void AsclinAscDemo_run(void)
 }
 ```
 
+
+
 ###HC-06 related
 
 - AT command mode 
@@ -280,6 +282,8 @@ void AsclinAscDemo_run(void)
 
 ###추가적인 설명
 
+
+
 ##2. Connect BlueTooth and AURIX
 
 - InfineonRacer_TC23A 코드를 변형하여 사용
@@ -290,7 +294,6 @@ void AsclinAscDemo_run(void)
 - Pin 연결
 
   - BlueToothe 모듈은  AURIX 보드의 pin(P15.2, 15.3)와 연결된다.
-
 
 <img src='image/Use_Bluetooth.png' style='zoom:100%'>
 
