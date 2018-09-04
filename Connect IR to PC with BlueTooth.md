@@ -93,7 +93,7 @@
   
           /* set the desired baudrate */
           ascConfig.baudrate.prescaler    = 1;
-          ascConfig.baudrate.baudrate     = 115200; /* FDR values will be calculated in initModule */
+          ascConfig.baudrate.baudrate     = 9600; /* FDR values will be calculated in initModule */
           ascConfig.baudrate.oversampling = IfxAsclin_OversamplingFactor_4;
   
           /* ISR priorities and interrupt target */
