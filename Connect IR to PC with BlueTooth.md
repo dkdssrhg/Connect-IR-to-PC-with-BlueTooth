@@ -1,9 +1,9 @@
-# Connect AURIX to PC with BlueTooth
+# Connect AURIX to PC with Bluetooth
 
 ## Objectives
 
-- AURIX를 이용한 블루투스 모듈의 BaudRate 변경
-- 블루투스 모듈을 이용한 무선 통신
+- AURIX를 이용한 블루투스 모듈 설정
+- 무선 직렬 통신을 무선(Bluetooth) 직렬 통신 변경하여 활용하기
 
 ## References
 
@@ -65,7 +65,7 @@
 
   - Asc0과 Asc1을 설정 
   - 송수신이 일어날 물리적 pin(P14.0, P14.1) , (P15.4, P15.5)을 설정
-  - Data 전송 속도를 정한 뒤, (AURIX와 통신을 진행하는 기기와 동일하게 맞춤)
+  - Data 전송 속도를 정한 뒤, (AURIX와 통신을 진행하는 기기와 동일하게 맞춤 HC-06 의 디폴트 값은 9600이다.)
   - 통신관련 Interrupt 설정
 
   ```c
@@ -86,7 +86,7 @@
   
           /* set the desired baudrate */
           ascConfig.baudrate.prescaler    = 1;
-          ascConfig.baudrate.baudrate     = 115200; /* FDR values will be calculated in initModule */
+          ascConfig.baudrate.baudrate     = 9600; /* FDR values will be calculated in initModule */
           ascConfig.baudrate.oversampling = IfxAsclin_OversamplingFactor_4;
   
           /* ISR priorities and interrupt target */
@@ -132,10 +132,10 @@
 //in ConfigurationIsr.h
 //set interrupt priority
 #define ISR_PRIORITY_ASC_0_RX 4  
-#define ISR_PRIORITY_ASC_0_TX 5 
-#define ISR_PRIORITY_ASC_0_EX 6 
+#define ISR_PRIORITY_ASC_0_TX 6 
+#define ISR_PRIORITY_ASC_0_EX 7 
 
-#define ISR_PRIORITY_ASC_1_RX 7 
+#define ISR_PRIORITY_ASC_1_RX 5 
 #define ISR_PRIORITY_ASC_1_TX 8 
 #define ISR_PRIORITY_ASC_1_EX 9
 
