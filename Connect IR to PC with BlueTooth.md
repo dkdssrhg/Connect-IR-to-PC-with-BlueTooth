@@ -23,11 +23,10 @@
 ## Background Information
 
 - **Bluetooth**
-  - HC-06은 3.1 V ~ 4.2 V에서 동작한다. TC237의 출력 전압은 3.3 V로 충분히 사용 가능하다.
-  - Rx / Tx 는 Receive, Transmit의 약어로 HC-06과 TC237의 Rx,Tx가 교차하도록 연결해야 한다.
-  - HC-06 baud rate의 기본값은 9600이고 통신을 하기 위해서는 TC237의 baud rate와 일치해야한다.
+  - HC-06은 3.1 V ~ 4.2 V에서 동작한다. AURIX의 출력 전압은 3.3 V로 충분히 사용 가능하다.
+  - Rx / Tx 는 Receive, Transmit의 약어로 HC-06과 AURIX의 Rx,Tx가 교차하도록 연결해야 한다.
+  - HC-06 baud rate의 기본값은 9600이고 통신을 하기 위해서는 AURIX의 baud rate와 일치해야한다.
 
-  
 ## 1. Change Bluetooth baud rate
 ###Objectives
 
@@ -69,9 +68,9 @@
 ```c
 const IfxAsclin_Asc_Pins pins = {
               NULL_PTR,IfxPort_InputMode_pullUp,        /* CTS pin not used */
-              &IfxAsclin1_RXB_P15_5_IN, IfxPort_InputMode_pullUp,        /* Rx pin */
+              &IfxAsclin1_RXB_P15_5_IN, IfxPort_InputMode_pullUp,  /* Rx pin */
               NULL_PTR,IfxPort_OutputMode_pushPull,     /* RTS pin not used */
-              &IfxAsclin1_TX_P15_4_OUT, IfxPort_OutputMode_pushPull,     /* Tx pin */
+              &IfxAsclin1_TX_P15_4_OUT, IfxPort_OutputMode_pushPull,/* Tx pin*/
               IfxPort_PadDriver_cmosAutomotiveSpeed1
           };
 ```
@@ -240,12 +239,12 @@ C---------1382400
 
 ```c
 >AT
->>OK
+>>>OK
 ```
 4. "AT+BUAD8" command를 입력한다.
 ```c
 >AT
->>OK
+>>>OK
 >AT+BAUD8
 ```
 5. HC-06의 응답인 "OK115200"가 출력된다.
@@ -306,7 +305,7 @@ void initSerialInterface(void)
 
 ###Terminal을 통한 송수신 확인
 
-1. 
+1. Teraterm을 실행하여 통신에 맞게 설정을 해준다.
 2. Enter를 입력하면 아래와 같은 메세지가 나타난다.
 ```c
 >Shell
