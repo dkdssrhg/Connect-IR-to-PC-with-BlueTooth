@@ -60,13 +60,14 @@
   - Asc1을 추가로 설정한다.
   - 아래와 같이 ASC_0과 관련된 부분을 ASC_1로 변경해준다.
 ```c
-          ascConfig.interrupt.txPriority    = ISR_PRIORITY_ASC_1_TX;
+	//in AsclinAscBtCfg.c          
+		  ascConfig.interrupt.txPriority    = ISR_PRIORITY_ASC_1_TX;
           ascConfig.interrupt.rxPriority    = ISR_PRIORITY_ASC_1_RX;
           ascConfig.interrupt.erPriority    = ISR_PRIORITY_ASC_1_EX;
 ```
   - 송수신이 일어날 물리적 pin(P15.4, P15.5)을 설정
 ```c
-const IfxAsclin_Asc_Pins pins = {
+	const IfxAsclin_Asc_Pins pins = {
               NULL_PTR,IfxPort_InputMode_pullUp,        /* CTS pin not used */
               &IfxAsclin1_RXB_P15_5_IN, IfxPort_InputMode_pullUp,  /* Rx pin */
               NULL_PTR,IfxPort_OutputMode_pushPull,     /* RTS pin not used */
@@ -76,49 +77,50 @@ const IfxAsclin_Asc_Pins pins = {
 ```
   - HC-06 baud rate의 기본값은 9600으로 AURIX의 baud rate도 9600으로 맞추어 준다.
 ```c
-	ascConfig.baudrate.baudrate     = 9600; /* FDR values will be calculated in initModule */
+	ascConfig.baudrate.baudrate     = 9600;
+	/* FDR values will be calculated in initModule */
 ```
 #### Interrupt Configuration
 
 - 통신 간 데이터 송수신을 위한 인터럽트를 등록한다.
 
 ```c
-//in ConfigurationIsr.h
-//set interrupt priority
-#define ISR_PRIORITY_ASC_1_RX 7 
-#define ISR_PRIORITY_ASC_1_TX 8 
-#define ISR_PRIORITY_ASC_1_EX 9
+	//in ConfigurationIsr.h
+	//set interrupt priority
+	#define ISR_PRIORITY_ASC_1_RX 7 
+	#define ISR_PRIORITY_ASC_1_TX 8 
+	#define ISR_PRIORITY_ASC_1_EX 9
 
-//name Interrupt serivce provider configuration
-#define ISR_PROVIDER_ASC_1    IfxSrc_Tos_cpu0 
+	//name Interrupt serivce provider configuration
+	#define ISR_PROVIDER_ASC_1    IfxSrc_Tos_cpu0 
 
-//name Interrupt configuration
-#define INTERRUPT_ASC_1_RX    ISR_ASSIGN(ISR_PRIORITY_ASC_1_RX, ISR_PROVIDER_ASC_1)
-#define INTERRUPT_ASC_1_TX    ISR_ASSIGN(ISR_PRIORITY_ASC_1_TX, ISR_PROVIDER_ASC_1)
-#define INTERRUPT_ASC_1_EX    ISR_ASSIGN(ISR_PRIORITY_ASC_1_EX, ISR_PROVIDER_ASC_1)
+	//name Interrupt configuration
+	#define INTERRUPT_ASC_1_RX    ISR_ASSIGN(ISR_PRIORITY_ASC_1_RX, 			ISR_PROVIDER_ASC_1)
+	#define INTERRUPT_ASC_1_TX    ISR_ASSIGN(ISR_PRIORITY_ASC_1_TX, 			ISR_PROVIDER_ASC_1)
+	#define INTERRUPT_ASC_1_EX    ISR_ASSIGN(ISR_PRIORITY_ASC_1_EX, 			ISR_PROVIDER_ASC_1)
 
-// in AsclinAscDemo.c
-IFX_INTERRUPT(asclin1TxISR, 0, ISR_PRIORITY_ASC_1_TX);
-IFX_INTERRUPT(asclin1RxISR, 0, ISR_PRIORITY_ASC_1_RX);
-IFX_INTERRUPT(asclin1ErISR, 0, ISR_PRIORITY_ASC_1_EX);
+	// in AsclinAscBtCfg.c
+	IFX_INTERRUPT(asclin1TxISR, 0, ISR_PRIORITY_ASC_1_TX);
+	IFX_INTERRUPT(asclin1RxISR, 0, ISR_PRIORITY_ASC_1_RX);
+	IFX_INTERRUPT(asclin1ErISR, 0, ISR_PRIORITY_ASC_1_EX);
 
-//name Interrupt for Transmit
-void asclin1TxISR(void)
-{
-    IfxAsclin_Asc_isrTransmit(&g_AsclinAsc1.drivers.asc);
-}
+	//name Interrupt for Transmit
+	void asclin1TxISR(void)
+	{
+	    IfxAsclin_Asc_isrTransmit(&g_AsclinAsc1.drivers.asc);
+	}
 
-//name Interrupt for Receive
-void asclin1RxISR(void)
-{
-    IfxAsclin_Asc_isrReceive(&g_AsclinAsc1.drivers.asc);
-}
+	//name Interrupt for Receive
+	void asclin1RxISR(void)
+	{
+	    IfxAsclin_Asc_isrReceive(&g_AsclinAsc1.drivers.asc);
+	}
 
-//name Interrupt for Error
-void asclin1ErISR(void)
-{
-    IfxAsclin_Asc_isrError(&g_AsclinAsc1.drivers.asc);
-}
+	//name Interrupt for Error
+	void asclin1ErISR(void)
+	{
+ 	   IfxAsclin_Asc_isrError(&g_AsclinAsc1.drivers.asc);
+	}
 
 ```
 
@@ -132,20 +134,20 @@ void asclin1ErISR(void)
   - ```IfxAsclin_Asc_write``` : 변수에 있는 데이터를 출력
 
 ```c
-// in AsclinAscDemo.c
-void AsclinAscDemo_run(void)
-{ 
-	g_AscWord.EndLineCount = 2; //Insert new line
-	g_AscWord.SpaceCount = 2;   //Delete letter
+	// in AsclinAscBtCfg.c
+	void AsclinAscDemo_run(void)
+	{ 
+		g_AscWord.EndLineCount = 2; //Insert new line
+		g_AscWord.SpaceCount = 2;   //Delete letter
 
-    sint8 Word_EndLine[2] = ENDL;
-    sint8 Word_Space[2] = " \b"; 
+ 	   sint8 Word_EndLine[2] = ENDL;
+ 	   sint8 Word_Space[2] = " \b"; 
     
-    static Ifx_SizeT  index = 0;
-
-    //Get the number of bytes in the rx buffer 
+       static Ifx_SizeT  index = 0;
+ 	    
 	g_AsclinAsc0.count = IfxAsclin_Asc_getReadCount(&g_AsclinAsc0.drivers.asc);
-
+	//Get the number of bytes in the rx buffer
+        
 	if(g_AsclinAsc0.count != 0){
         //If the data was in buffer read the data and Write it to the Shell
 
@@ -165,10 +167,10 @@ void AsclinAscDemo_run(void)
         IfxAsclin_Asc_write(&g_AsclinAsc1.drivers.asc, g_AsclinAsc0.txData,
                             &index, TIME_NULL);
         index = 0;
-       }
+      }
      
-     //If AURIX board receive '\r' then it send '(space)' to the Shell
      else if(g_AsclinAsc0.rxData[0] == '\b'){
+         //If AURIX board receive '\r' then it send '(space)' to the Shell
         	index--;
         	IfxAsclin_Asc_write(&g_AsclinAsc0.drivers.asc, Word_Space,
                                 &g_AscWord.SpaceCount , TIME_NULL);
@@ -190,7 +192,7 @@ void AsclinAscDemo_run(void)
 	IfxAsclin_Asc_write(&g_AsclinAsc0.drivers.asc, g_AsclinAsc1.rxData,
                         &g_AsclinAsc1.count, TIME_NULL);
     }
-}
+	}
 ```
 
 
@@ -262,7 +264,7 @@ C---------1382400
 
 ### Example code
 - InfineonRacer_TC23A
-  - 송수신이 일어날 물리적 pin(P14.0, P14.1)에서 pin(P15.2, P15.3)으로 변경
+  - ASC0의 핀 설정을  pin(P14.0, P14.1)에서 pin(P15.2, P15.3)으로 변경
 
 ### Hardware
 
@@ -280,32 +282,32 @@ C---------1382400
   - 블루투스 통신을 위해 RxD / TxD Line을 P15.3, P15.2로 변경.
 
 ```c
-//in AsclinShellInterface.c
-void initSerialInterface(void)
-{
-    {   //........
-        IfxAsclin_Asc_Pins ascPins = {
-            .cts       = NULL_PTR,
-            .ctsMode   = IfxPort_InputMode_noPullDevice,
-            .rx        = &IfxAsclin0_RXB_P15_3_IN,
-            .rxMode    = IfxPort_InputMode_noPullDevice,
-            .rts       = NULL_PTR,
-            .rtsMode   = IfxPort_OutputMode_pushPull,
-            .tx        = &IfxAsclin0_TX_P15_2_OUT,
-            .txMode    = IfxPort_OutputMode_pushPull,
-            .pinDriver = IfxPort_PadDriver_cmosAutomotiveSpeed1
-        };
-        //........
-    }
-  //......
-}
+	//in AsclinShellInterface.c
+	void initSerialInterface(void)
+	{
+  	  {   //........
+    	    IfxAsclin_Asc_Pins ascPins = {
+     	       .cts       = NULL_PTR,
+      	       .ctsMode   = IfxPort_InputMode_noPullDevice,
+        	   .rx        = &IfxAsclin0_RXB_P15_3_IN,
+         	   .rxMode    = IfxPort_InputMode_noPullDevice,
+       		   .rts       = NULL_PTR,
+       		   .rtsMode   = IfxPort_OutputMode_pushPull,
+        	   .tx        = &IfxAsclin0_TX_P15_2_OUT,
+        	   .txMode    = IfxPort_OutputMode_pushPull,
+      		   .pinDriver = IfxPort_PadDriver_cmosAutomotiveSpeed1
+      	  	};
+    	    //........
+  	  }
+	  //......
+	}
 ```
 
 
 
 ###Terminal을 통한 송수신 확인
 
-1. Teraterm을 실행하여 통신에 맞게 설정을 해준다.
+1. Teraterm을 실행하여 baud rate를 설정해준다.
 2. Enter를 입력하면 아래와 같은 메세지가 나타난다.
 ```c
 >Shell
